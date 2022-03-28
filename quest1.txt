@@ -1,0 +1,165 @@
+######
+# autodefender.py
+# automatically respond to forays on ChatWars
+######
+
+import time
+from telethon import TelegramClient, events
+import emoji
+import random
+import datetime
+import asyncio 
+
+# add your own details here ...
+
+
+# ... and here
+auto=-1001708380606
+
+rss=65
+TRADER = "^You defended villagers well. In exchange for your help, local trader offered you a deal you can't refuse. " \
+         "He is going to buy some of your resources for whole 2💰 per item. However, he is leaving to distant lands " \
+         "and his caravan can only carry (?P<Carry>\\d{1,4})."
+
+client1 = TelegramClient('jose', '17205271', 'e63afe95ecb038b0be419654bd403602', sequential_updates=True)
+
+
+@client1.on(events.NewMessage(chats = '@chtwrsbot', incoming=True))
+
+async def handle_new_message(event):
+
+            if "You were strolling around" in event.raw_text:
+                t = random.random() *2 *6
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🧹Intervene')
+          
+            if "Forest 3min" in event.raw_text:
+                t = random.random() *5 
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🌲Forest')
+
+          
+            if 'you went to a forest' in event.raw_text:
+                t = random.random() *10 +200
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+            if "Swamp 6min" in event.raw_text:
+                t = random.random() *5 +2
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🍄Swamp')
+
+          
+            if 'you went to a swamp' in event.raw_text:
+                t = random.random() *10 +330
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+            if 'Stamina restored. You are ready for more adventures!' in event.raw_text:
+                t = random.random() *10 +5
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+
+#rayko
+
+@client1.on(events.NewMessage(chats = auto, incoming=True))
+
+
+async def handle_new_message(event):
+
+            if 'Quest all' in event.raw_text:
+                t = random.random() *10 
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client1.send_message('@chtwrsbot', '🗺Quests')
+            if 'Quest jose' in event.raw_text:
+                t = random.random() *10 
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client1.send_message('@chtwrsbot', '🗺Quests')
+
+            if "You met some hostile" in event.raw_text:
+                expresion = event.raw_text
+                localizador = expresion.find('/fight_')
+                t = random.random()
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client1.send_message('@Infinite_ashes', expresion[localizador:])
+
+client2= TelegramClient('timon', '17205271', 'e63afe95ecb038b0be419654bd403602', sequential_updates=True)
+
+
+@client2.on(events.NewMessage(chats = '@chtwrsbot', incoming=True))
+
+async def handle_new_message(event):
+            if "You were strolling around" in event.raw_text:
+                t = random.random() *2 *10
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🧹Intervene')
+          
+            if "Forest 3min" in event.raw_text:
+                t = random.random() *5 +2
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🌲Forest')
+
+          
+            if 'you went to a forest' in event.raw_text:
+                t = random.random() *10 +200
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+            if "Swamp 6min" in event.raw_text:
+                t = random.random() *5 +2
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🍄Swamp')
+
+          
+            if 'you went to a swamp' in event.raw_text:
+                t = random.random() *10 +320
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+            if 'Stamina restored. You are ready for more adventures!' in event.raw_text:
+                t = random.random() *10 + 5
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='🗺Quests')
+
+
+#rayko
+
+@client2.on(events.NewMessage(chats = auto, incoming=True))
+
+
+async def handle_new_message(event):
+
+            if 'Quest all' in event.raw_text:
+                t = random.random() *10 
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client2.send_message('@chtwrsbot', '🗺Quests')
+            if 'Quest timon' in event.raw_text:
+                t = random.random() *10 
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client2.send_message('@chtwrsbot', '🗺Quests')
+
+@client2.on(events.NewMessage(chats = '@chtwrsbot', incoming=True, pattern=TRADER))
+
+async def handler_trader(event: events.NewMessage.Event):
+                await asyncio.sleep(random.randint(5, 10))
+                carry = int(event.pattern_match.group(1))
+                trade = '/sc_{}_{}'.format(rss, carry)
+                await client2.send_message('@chtwrsbot', message=trade)
+
+client1.start()
+client2.start()
+client1.run_until_disconnected()
+client2.run_until_disconnected

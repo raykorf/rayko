@@ -1,0 +1,88 @@
+######
+# autodefender.py
+# automatically respond to forays on ChatWars
+######
+
+import time
+from telethon import TelegramClient, events
+import emoji
+import random
+import datetime
+import asyncio 
+
+# add your own details here ...
+api_id = 17205271
+api_hash = 'e63afe95ecb038b0be419654bd403602'
+
+# ... and here
+phone = '+5351504923'
+session_file = 'setsu'
+
+
+client = TelegramClient(session_file, api_id, api_hash, sequential_updates=True)
+
+@client.on(events.NewMessage(chats = '@chtwrsbot', incoming=True))
+
+async def handle_new_message(event):
+
+            if "You were strolling around" in event.raw_text:
+                t = random.random() *2 *60
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await event.click(text='ðŸ§¹Intervene')
+
+            if "Item used: Vial of Rage" in event.raw_text:
+                t = random.random() *2 +2
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client.send_message('@chtwrsbot', '/use_p02')
+
+            if "Item used: Potion of Rage" in event.raw_text:
+                t = random.random() *2 +3
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client.send_message('@chtwrsbot', '/use_p03')
+
+            if "/g_hire" in event.raw_text:
+                expresion = event.raw_text
+                localizador = expresion.find('/g_hire')
+                t = random.random() *1
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client.send_message('@chtwrsbot', expresion[localizador:])
+
+#SETSU
+@client.on(events.NewMessage(chats = '@sawamura_setsu', incoming=True))
+
+async def handle_new_message(event):
+            if "You met" in event.raw_text:
+                expresion = event.raw_text
+                localizador = expresion.find('/fight_')
+                await client.send_message('@chtwrsbot', expresion[localizador:])
+
+#GRETY
+@client.on(events.NewMessage(chats = '@Queen_of_unicornland', incoming=True))
+
+async def handle_new_message(event):
+            if "You met" in event.raw_text:
+                expresion = event.raw_text
+                localizador = expresion.find('/fight_')
+                t = 1
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client.send_message('@chtwrsbot', expresion[localizador:])
+
+#ANGRYBIRD
+@client.on(events.NewMessage(chats = '@birds2angry_bot', incoming=True))
+
+async def handle_new_message(event):
+            if "You met" in event.raw_text:
+                expresion = event.raw_text
+                localizador = expresion.find('/fight_')
+                t = random.random() *1
+                print(datetime.datetime.now(), 'waiting', t, 'sec')
+                await asyncio.sleep(t)
+                await client.send_message('@chtwrsbot', expresion[localizador:])
+
+client.start(phone)
+client.run_until_disconnected()
