@@ -1,7 +1,4 @@
-﻿######
-# autodefender.py
-# automatically respond to forays on ChatWars
-######
+
 
 import time
 from telethon import TelegramClient, events
